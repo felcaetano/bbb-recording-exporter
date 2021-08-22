@@ -13,6 +13,7 @@ allmeetings.each do |meetingid|
     if File.exist?("#{published_folder}/#{meetingid}/metadata.xml")
       puts "Processing : #{meetingid}"
       system("#{export_script} -m #{meetingid}")
+      FileUtils.chown_R 'bigbluebutton', 'bigbluebutton', "#{published_folder}/#{meetingid}/"
     end
   end
 end
