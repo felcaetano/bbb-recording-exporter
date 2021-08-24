@@ -115,8 +115,8 @@ def add_captions
   if ffmpeg
     FileUtils.mv("#{@published_files}/meeting_captioned.mp4", "#{@published_files}/meeting.mp4")
   else
-      warn("An error occurred adding the captions to the video.")
-      exit(false)
+    warn("An error occurred adding the captions to the video.")
+    exit(false)
   end
 end
 
@@ -545,7 +545,7 @@ def render_video(duration, meeting_name)
   end
 
   render << "-c:a aac -crf #{CONSTANT_RATE_FACTOR} -shortest -y -t #{duration} -threads #{THREADS} "
-  render << "-metadata title='#{meeting_name}' #{BENCHMARK} #{@published_files}/meeting.mp4"
+  render << "-metadata title='#{meeting_name}' #{BENCHMARK} #{@published_files}/meeting.mp4.tmp"
 
   ffmpeg = system(render)
 
@@ -553,6 +553,7 @@ def render_video(duration, meeting_name)
     warn("An error occurred rendering the video.")
     exit(false)
   end
+  FileUtils.mv("#{@published_files}/meeting.mp4.tmp", "#{@published_files}/meeting.mp4")
 end
 
 def render_whiteboard(panzooms, slides, shapes, timestamps)
