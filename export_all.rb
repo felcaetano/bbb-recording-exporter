@@ -14,6 +14,7 @@ allmeetings.each do |meetingid|
       puts "Processing : #{meetingid}"
       system("#{export_script} -m #{meetingid}")
       FileUtils.chown_R 'bigbluebutton', 'bigbluebutton', "#{published_folder}/#{meetingid}/"
+      FileUtils.chown_R 'bigbluebutton', 'bigbluebutton', "/var/log/bigbluebutton/"
     end
   end
 end
